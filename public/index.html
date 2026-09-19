@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>SkinStock</title>
+<meta name="theme-color" content="#3F5443" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="icon" href="/icons/icon-192.png" />
+<link rel="apple-touch-icon" href="/icons/icon-192.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <h1>SkinStock</h1>
+  <button id="refreshAllBtn" class="icon-btn" title="Check all prices now" aria-label="Check all prices now">&#8635;</button>
+</header>
+
+<nav id="categoryChips" class="chips"></nav>
+
+<main id="homeView" class="view">
+  <div id="productGrid" class="product-grid"></div>
+  <div id="emptyState" class="empty-state" hidden>
+    <p class="empty-title">No products yet</p>
+    <p class="empty-body">Add the first skincare product you want to keep an eye on. You'll attach one or more websites to it next.</p>
+  </div>
+  <div class="backup-row">
+    <button id="backupBtn" class="text-btn">Download backup</button>
+    <button id="restoreBtn" class="text-btn">Restore from backup</button>
+    <input id="restoreFile" type="file" accept="application/json" hidden />
+  </div>
+</main>
+
+<main id="detailView" class="view" hidden>
+  <button class="back-btn" id="backBtn">&larr; Back</button>
+  <div class="detail-card">
+    <img id="detailImg" class="detail-img" src="" alt="" />
+    <div class="detail-heading">
+      <h2 id="detailName"></h2>
+      <span id="detailCategory" class="tag"></span>
+      <div><button id="editProductBtn" class="text-btn">Edit product</button></div>
+    </div>
+
+    <p id="allOutOfStockBanner" class="all-oos-banner" hidden>Out of stock at every site you're tracking right now.</p>
+
+    <section class="note-section">
+      <label for="detailNote">Note</label>
+      <textarea id="detailNote" rows="2" placeholder="e.g. Alternate: CeraVe PM if this is out of stock"></textarea>
+      <button id="saveNoteBtn" class="text-btn">Save note</button>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h3>Prices</h3>
+        <span id="lastCheckedLabel" class="muted"></span>
+      </div>
+      <div id="listingsList" class="listings-list"></div>
+      <button id="refreshProductBtn" class="secondary-btn">&#8635; Refresh this product's prices</button>
+      <button id="addListingBtn" class="secondary-btn">+ Add a website for this product</button>
+    </section>
+
+    <button id="deleteProductBtn" class="danger-link">Delete this product</button>
+  </div>
+</main>
+
+<button id="fab" class="fab" title="Add product" aria-label="Add product">+</button>
+
+<!-- Add product modal -->
+<div id="addProductModal" class="modal" hidden>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Add a product</h3>
+      <button class="icon-btn" id="closeAddModal">&times;</button>
+    </div>
+    <label>Product name</label>
+    <input id="newName" type="text" placeholder="e.g. Anua Heartleaf 77% Toner" />
+
+    <label>Category</label>
+    <input id="newCategory" list="categoryOptions" type="text" placeholder="e.g. Toner" />
+    <datalist id="categoryOptions"></datalist>
+
+    <label>Image URL <span class="muted">(optional)</span></label>
+    <input id="newImage" type="text" placeholder="https://..." />
+
+    <label>Note <span class="muted">(optional)</span></label>
+    <textarea id="newNote" rows="2" placeholder="e.g. Alternate: X product if this is pricey"></textarea>
+
+    <button id="createProductBtn" class="primary-btn">Add product</button>
+    <p class="muted small">You can attach websites to compare prices from right after this.</p>
+  </div>
+</div>
+
+<!-- Add listing modal -->
+<div id="addListingModal" class="modal" hidden>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="listingModalTitle">Add a website</h3>
+      <button class="icon-btn" id="closeListingModal">&times;</button>
+    </div>
+    <label>Website name</label>
+    <input id="listingSite" type="text" placeholder="e.g. Daraz, Sephora.pk, Nykaa" />
+
+    <label>Product page URL</label>
+    <input id="listingUrl" type="text" placeholder="https://..." />
+    <p id="presetNote" class="muted small" hidden></p>
+
+    <label>CSS selector for the price <span class="muted">(see hint below)</span></label>
+    <input id="listingSelector" type="text" placeholder="e.g. .price, span#price, .product-price-value" />
+
+    <label>CSS selector for the original/"was" price <span class="muted">(optional — only if the site shows a strikethrough price during a sale)</span></label>
+    <input id="listingOriginalSelector" type="text" placeholder="e.g. .price-old, .strikethrough" />
+
+    <label>CSS selector for stock status <span class="muted">(optional — usually the Add to Cart button)</span></label>
+    <input id="listingStockSelector" type="text" placeholder='e.g. button[name="add"], .single_add_to_cart_button' />
+
+    <button id="testListingBtn" class="secondary-btn">Test</button>
+    <div id="testResult" class="test-result" hidden></div>
+
+    <button id="saveListingBtn" class="primary-btn">Save website</button>
+
+    <details class="selector-help">
+      <summary>How do I find the CSS selector?</summary>
+      <p>On the product page (in Chrome on your phone or computer), long-press or right-click the price and choose <strong>Inspect</strong>. In the panel that opens, the highlighted line is the HTML element showing the price. Look for a <code>class="..."</code> or <code>id="..."</code> on it — a class becomes <code>.that-class</code> and an id becomes <code>#that-id</code>. Paste that in. Hit Test to confirm it finds the right number before saving.</p>
+    </details>
+  </div>
+</div>
+
+<!-- Edit product modal -->
+<div id="editProductModal" class="modal" hidden>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Edit product</h3>
+      <button class="icon-btn" id="closeEditModal">&times;</button>
+    </div>
+    <label>Product name</label>
+    <input id="editName" type="text" />
+
+    <label>Category</label>
+    <input id="editCategory" list="categoryOptionsEdit" type="text" />
+    <datalist id="categoryOptionsEdit"></datalist>
+
+    <label>Image URL <span class="muted">(optional)</span></label>
+    <input id="editImage" type="text" placeholder="https://..." />
+
+    <button id="saveEditBtn" class="primary-btn">Save changes</button>
+  </div>
+</div>
+
+<script src="/site-presets.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

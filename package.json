@@ -1,0 +1,16 @@
+{
+  "name": "skinstock",
+  "version": "1.0.0",
+  "description": "Track skincare products across the websites you trust, and get their prices refreshed automatically every 12 hours.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "axios": "^1.7.7",
+    "cheerio": "^1.0.0",
+    "node-cron": "^3.0.3",
+    "cors": "^2.8.5"
+  }
+}
