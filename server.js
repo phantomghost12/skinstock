@@ -17,6 +17,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ---------- optional password protection ----------
+// Off by default (so this doesn't change anything for your current Termux
+// setup, where the server was never reachable by anyone but you). Once
+// this app lives on the public internet, set an APP_PASSWORD environment
+// variable (on Render: Dashboard -> your service -> Environment) and every
+// visitor — including you — will get a plain browser login prompt asking
+// for it. Username can be anything; only the password is checked.
+app.use((req, res, next) => {
+  if (!process.env.APP_PASSWORD) return next();
+  const header = req.headers.authorization || '';
+  const expected = 'Basic ' + Buffer.from(`skinstock:${process.env.APP_PASSWORD}`).toString('base64');
+  if (header === expected) return next();
+  res.set('WWW-Authenticate', 'Basic realm="SkinStock"');
+  res.status(401).send('Password required.');
+});
+
 // Never let the browser cache the service worker file itself — otherwise
 // a fix to it (like this one) could get stuck the same way the old
 // caching bug did. This forces every page load to check for a fresh copy.
@@ -256,7 +272,18 @@ app.post('/api/scrape/run', async (req, res) => {
   const started = Date.now();
   const results = await runWithConcurrency(data.listings, CONCURRENCY, (l) => checkOneListing(data, l));
   db.save(data);
-  res.json({ checked: results.length, seconds: ((Date.now() - started) / 1000).toFixed(1), results });
+  // Kept deliberately tiny: external schedulers like cron-job.org cap how
+  // much response data they'll read back, and the full per-listing detail
+  // (including any error text) isn't needed by the caller anyway — the
+  // actual scrape results are already saved to disk regardless of what's
+  // returned here.
+  const failed = results.filter((r) => !r.ok).length;
+  res.json({
+    ok: true,
+    checked: results.length,
+    failed,
+    seconds: ((Date.now() - started) / 1000).toFixed(1),
+  });
 });
 
 app.get('/api/listings/:id/history', (req, res) => {
