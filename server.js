@@ -27,8 +27,11 @@ app.use(express.json());
 app.use((req, res, next) => {
   if (!process.env.APP_PASSWORD) return next();
   const header = req.headers.authorization || '';
-  const expected = 'Basic ' + Buffer.from(`skinstock:${process.env.APP_PASSWORD}`).toString('base64');
-  if (header === expected) return next();
+  if (header.startsWith('Basic ')) {
+    const decoded = Buffer.from(header.slice(6), 'base64').toString('utf8');
+    const password = decoded.slice(decoded.indexOf(':') + 1); // username is ignored
+    if (password === process.env.APP_PASSWORD) return next();
+  }
   res.set('WWW-Authenticate', 'Basic realm="SkinStock"');
   res.status(401).send('Password required.');
 });
@@ -267,23 +270,44 @@ app.post('/api/scrape/test', async (req, res) => {
   }
 });
 
-app.post('/api/scrape/run', async (req, res) => {
-  const data = db.load();
-  const started = Date.now();
-  const results = await runWithConcurrency(data.listings, CONCURRENCY, (l) => checkOneListing(data, l));
-  db.save(data);
-  // Kept deliberately tiny: external schedulers like cron-job.org cap how
-  // much response data they'll read back, and the full per-listing detail
-  // (including any error text) isn't needed by the caller anyway — the
-  // actual scrape results are already saved to disk regardless of what's
-  // returned here.
-  const failed = results.filter((r) => !r.ok).length;
-  res.json({
-    ok: true,
-    checked: results.length,
-    failed,
-    seconds: ((Date.now() - started) / 1000).toFixed(1),
-  });
+// Tracks whether a full refresh is currently running, and when the last
+// one finished — so both the cron ping and the in-app button can tell
+// what's happening without either of them having to sit and wait for it.
+let scrapeState = { inProgress: false, lastStartedAt: null, lastFinishedAt: null, lastChecked: null, lastFailed: null };
+
+async function runFullScrape() {
+  scrapeState.inProgress = true;
+  scrapeState.lastStartedAt = new Date().toISOString();
+  try {
+    const data = db.load();
+    const results = await runWithConcurrency(data.listings, CONCURRENCY, (l) => checkOneListing(data, l));
+    db.save(data);
+    scrapeState.lastChecked = results.length;
+    scrapeState.lastFailed = results.filter((r) => !r.ok).length;
+  } catch (err) {
+    console.error('[scrape] background run failed:', err);
+  } finally {
+    scrapeState.inProgress = false;
+    scrapeState.lastFinishedAt = new Date().toISOString();
+  }
+}
+
+// Replies immediately — this is what makes it safe to trigger from an
+// external scheduler like cron-job.org, whose free tier aborts anything
+// that takes longer than 30 seconds to respond. The actual scraping keeps
+// running on the server afterward regardless of how long it takes; poll
+// /api/scrape/status (used by the in-app refresh button) to know when
+// it's actually done.
+app.post('/api/scrape/run', (req, res) => {
+  if (scrapeState.inProgress) {
+    return res.json({ ok: true, started: false, alreadyRunning: true });
+  }
+  runFullScrape(); // deliberately not awaited
+  res.json({ ok: true, started: true });
+});
+
+app.get('/api/scrape/status', (req, res) => {
+  res.json(scrapeState);
 });
 
 app.get('/api/listings/:id/history', (req, res) => {
