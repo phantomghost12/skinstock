@@ -173,7 +173,7 @@
       "current_price": 5799,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:37.584Z",
+      "last_checked": "2026-09-27T14:57:48.529Z",
       "last_error": null
     },
     {
@@ -187,7 +187,7 @@
       "current_price": 7907,
       "original_price": 8785,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:39.151Z",
+      "last_checked": "2026-09-27T14:57:52.105Z",
       "last_error": null
     },
     {
@@ -201,7 +201,7 @@
       "current_price": 2350,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:37.408Z",
+      "last_checked": "2026-09-27T14:57:48.837Z",
       "last_error": null
     },
     {
@@ -212,10 +212,10 @@
       "css_selector": ".price-item--sale, .price__regular .price-item--regular",
       "original_selector": ".price__sale .price-item--regular",
       "stock_selector": "button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 2344,
+      "current_price": 2179,
       "original_price": 3349,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:38.592Z",
+      "last_checked": "2026-09-27T14:57:50.336Z",
       "last_error": null
     },
     {
@@ -226,10 +226,10 @@
       "css_selector": "meta[property=\"product:price:amount\"]",
       "original_selector": null,
       "stock_selector": ".stock-status, .alert-danger, button.btn-cart",
-      "current_price": 4724,
+      "current_price": 5135,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:38.347Z",
+      "last_checked": "2026-09-27T14:57:50.741Z",
       "last_error": null
     },
     {
@@ -242,8 +242,8 @@
       "stock_selector": "button[name=\"add\"], .product-form__submit, [name=\"add\"]",
       "current_price": 4399,
       "original_price": null,
-      "in_stock": false,
-      "last_checked": "2026-09-19T10:44:38.757Z",
+      "in_stock": true,
+      "last_checked": "2026-09-27T14:57:49.119Z",
       "last_error": null
     },
     {
@@ -254,10 +254,10 @@
       "css_selector": ".price-item--sale, .price__regular .price-item--regular",
       "original_selector": ".price__sale .price-item--regular",
       "stock_selector": "button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 4612,
+      "current_price": 4399,
       "original_price": 6589,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:39.025Z",
+      "last_checked": "2026-09-27T14:57:49.883Z",
       "last_error": null
     },
     {
@@ -271,7 +271,7 @@
       "current_price": 5980,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:39.603Z",
+      "last_checked": "2026-09-27T14:57:50.064Z",
       "last_error": null
     },
     {
@@ -285,7 +285,7 @@
       "current_price": 4500,
       "original_price": null,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:39.318Z",
+      "last_checked": "2026-09-27T14:57:50.954Z",
       "last_error": null
     },
     {
@@ -296,10 +296,10 @@
       "css_selector": "meta[property=\"product:price:amount\"]",
       "original_selector": null,
       "stock_selector": ".stock-status, .alert-danger, button.btn-cart",
-      "current_price": 4094,
+      "current_price": 4450,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:45:22.070Z",
+      "last_checked": "2026-09-27T14:57:52.459Z",
       "last_error": null
     },
     {
@@ -310,10 +310,10 @@
       "css_selector": "meta[property=\"og:price:amount\"]",
       "original_selector": null,
       "stock_selector": "button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 4399,
+      "current_price": 3499,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:45:20.367Z",
+      "last_checked": "2026-09-27T14:57:51.085Z",
       "last_error": null
     },
     {
@@ -327,7 +327,7 @@
       "current_price": 4304,
       "original_price": 5063,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:45:23.739Z",
+      "last_checked": "2026-09-27T14:57:55.494Z",
       "last_error": null
     },
     {
@@ -338,10 +338,10 @@
       "css_selector": ".price-item--sale, .price__regular .price-item--regular",
       "original_selector": ".price__sale .price-item--regular",
       "stock_selector": "button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 4479,
+      "current_price": 5759,
       "original_price": 6399,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:45:20.793Z",
+      "last_checked": "2026-09-27T14:57:51.777Z",
       "last_error": null
     },
     {
@@ -352,10 +352,10 @@
       "css_selector": ".price-item--sale, .price__regular .price-item--regular",
       "original_selector": ".price__sale .price-item--regular",
       "stock_selector": "button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 5949,
+      "current_price": 7649,
       "original_price": 8499,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:40.349Z",
+      "last_checked": "2026-09-27T14:57:51.984Z",
       "last_error": null
     },
     {
@@ -366,10 +366,10 @@
       "css_selector": "meta[property=\"product:price:amount\"]",
       "original_selector": null,
       "stock_selector": ".stock-status, .alert-danger, button.btn-cart",
-      "current_price": 6463,
+      "current_price": 7025,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:42.563Z",
+      "last_checked": "2026-09-27T14:57:53.018Z",
       "last_error": null
     },
     {
@@ -383,7 +383,7 @@
       "current_price": 2899,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:40.785Z",
+      "last_checked": "2026-09-27T14:57:52.547Z",
       "last_error": null
     },
     {
@@ -397,7 +397,7 @@
       "current_price": 2950,
       "original_price": null,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:41.091Z",
+      "last_checked": "2026-09-27T14:57:52.774Z",
       "last_error": null
     },
     {
@@ -408,10 +408,10 @@
       "css_selector": "meta[property=\"product:price:amount\"]",
       "original_selector": null,
       "stock_selector": ".stock-status, .alert-danger, button.btn-cart",
-      "current_price": 2567,
+      "current_price": 2790,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:41.831Z",
+      "last_checked": "2026-09-27T14:57:53.656Z",
       "last_error": null
     },
     {
@@ -425,7 +425,7 @@
       "current_price": 6980,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:42.245Z",
+      "last_checked": "2026-09-27T14:57:54.055Z",
       "last_error": null
     },
     {
@@ -439,7 +439,7 @@
       "current_price": 6950,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:42.012Z",
+      "last_checked": "2026-09-27T14:57:53.340Z",
       "last_error": null
     },
     {
@@ -450,10 +450,10 @@
       "css_selector": ".price-item--sale, .price__regular .price-item--regular",
       "original_selector": ".price__sale .price-item--regular",
       "stock_selector": "button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 6537,
+      "current_price": 7689,
       "original_price": 9339,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:42.787Z",
+      "last_checked": "2026-09-27T14:57:54.249Z",
       "last_error": null
     },
     {
@@ -467,7 +467,7 @@
       "current_price": 6499,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:42.909Z",
+      "last_checked": "2026-09-27T14:57:54.383Z",
       "last_error": null
     },
     {
@@ -481,7 +481,7 @@
       "current_price": 6900,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:44.008Z",
+      "last_checked": "2026-09-27T14:57:55.047Z",
       "last_error": null
     },
     {
@@ -495,7 +495,7 @@
       "current_price": 2450,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:43.656Z",
+      "last_checked": "2026-09-27T14:57:55.222Z",
       "last_error": null
     },
     {
@@ -509,7 +509,7 @@
       "current_price": 4897,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:45:20.503Z",
+      "last_checked": "2026-09-27T14:57:55.352Z",
       "last_error": null
     },
     {
@@ -522,8 +522,8 @@
       "stock_selector": "shopifyvariant:available, jsonld:availability, button[name=\"add\"], .product-form__submit, [name=\"add\"]",
       "current_price": 5200,
       "original_price": null,
-      "in_stock": true,
-      "last_checked": "2026-09-19T10:44:44.167Z",
+      "in_stock": false,
+      "last_checked": "2026-09-27T14:57:55.655Z",
       "last_error": null
     },
     {
@@ -537,7 +537,7 @@
       "current_price": 4297,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:44.843Z",
+      "last_checked": "2026-09-27T14:57:56.295Z",
       "last_error": null
     },
     {
@@ -551,7 +551,7 @@
       "current_price": 6200,
       "original_price": 7500,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:44.306Z",
+      "last_checked": "2026-09-27T14:57:55.804Z",
       "last_error": null
     },
     {
@@ -565,7 +565,7 @@
       "current_price": 6500,
       "original_price": 9790,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:44.477Z",
+      "last_checked": "2026-09-27T14:57:55.956Z",
       "last_error": null
     },
     {
@@ -579,7 +579,7 @@
       "current_price": 7500,
       "original_price": 8500,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:44.670Z",
+      "last_checked": "2026-09-27T14:57:56.158Z",
       "last_error": null
     },
     {
@@ -593,7 +593,7 @@
       "current_price": 5397,
       "original_price": 7000,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:44.994Z",
+      "last_checked": "2026-09-27T14:57:56.445Z",
       "last_error": null
     },
     {
@@ -604,10 +604,10 @@
       "css_selector": "shopifyvariant:price, jsonld:price, .price-item--sale, .price__regular .price-item--regular, meta[property=\"og:price:amount\"]",
       "original_selector": "shopifyvariant:original, .price__sale .price-item--regular",
       "stock_selector": "shopifyvariant:available, jsonld:availability, button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 4199,
+      "current_price": 5949,
       "original_price": 8129,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:45.268Z",
+      "last_checked": "2026-09-27T14:57:56.745Z",
       "last_error": null
     },
     {
@@ -621,7 +621,7 @@
       "current_price": 5500,
       "original_price": 6500,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:45.756Z",
+      "last_checked": "2026-09-27T14:57:57.599Z",
       "last_error": null
     },
     {
@@ -632,10 +632,10 @@
       "css_selector": "shopifyvariant:price, jsonld:price, .price-item--sale, .price__regular .price-item--regular, meta[property=\"og:price:amount\"]",
       "original_selector": "shopifyvariant:original, .price__sale .price-item--regular",
       "stock_selector": "shopifyvariant:available, jsonld:availability, button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 5450,
+      "current_price": 4800,
       "original_price": 7720,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:45.605Z",
+      "last_checked": "2026-09-27T14:57:57.076Z",
       "last_error": null
     },
     {
@@ -649,7 +649,7 @@
       "current_price": 3697,
       "original_price": 5500,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:45.412Z",
+      "last_checked": "2026-09-27T14:57:56.911Z",
       "last_error": null
     },
     {
@@ -663,7 +663,7 @@
       "current_price": 3750,
       "original_price": 5270,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:45.954Z",
+      "last_checked": "2026-09-27T14:57:57.236Z",
       "last_error": null
     },
     {
@@ -677,7 +677,7 @@
       "current_price": 4200,
       "original_price": 5500,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:46.165Z",
+      "last_checked": "2026-09-27T14:57:57.384Z",
       "last_error": null
     },
     {
@@ -688,10 +688,10 @@
       "css_selector": "shopifyvariant:price, jsonld:price, .price-item--sale, .price__regular .price-item--regular, meta[property=\"og:price:amount\"]",
       "original_selector": "shopifyvariant:original, .price__sale .price-item--regular",
       "stock_selector": "shopifyvariant:available, jsonld:availability, button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 2899,
+      "current_price": 4049,
       "original_price": 4999,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:46.493Z",
+      "last_checked": "2026-09-27T14:57:57.957Z",
       "last_error": null
     },
     {
@@ -702,10 +702,10 @@
       "css_selector": "shopifyvariant:price, jsonld:price, .price-item--sale, .price__regular .price-item--regular, meta[property=\"og:price:amount\"]",
       "original_selector": "shopifyvariant:original, .price__sale .price-item--regular",
       "stock_selector": "shopifyvariant:available, jsonld:availability, button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 4497,
+      "current_price": 4397,
       "original_price": 6000,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:46.302Z",
+      "last_checked": "2026-09-27T14:57:57.747Z",
       "last_error": null
     },
     {
@@ -716,10 +716,10 @@
       "css_selector": "shopifyvariant:price, jsonld:price, .price-item--sale, .price__regular .price-item--regular, meta[property=\"og:price:amount\"]",
       "original_selector": "shopifyvariant:original, .price__sale .price-item--regular",
       "stock_selector": "shopifyvariant:available, jsonld:availability, button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 5228,
+      "current_price": 5449,
       "original_price": 7469,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:47.718Z",
+      "last_checked": "2026-09-27T14:57:59.439Z",
       "last_error": null
     },
     {
@@ -730,10 +730,10 @@
       "css_selector": "shopifyvariant:price, jsonld:price, .price-item--sale, .price__regular .price-item--regular, meta[property=\"og:price:amount\"]",
       "original_selector": "shopifyvariant:original, .price__sale .price-item--regular",
       "stock_selector": "shopifyvariant:available, jsonld:availability, button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 4830,
+      "current_price": 4930,
       "original_price": 6900,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:47.940Z",
+      "last_checked": "2026-09-27T14:57:59.262Z",
       "last_error": null
     },
     {
@@ -747,7 +747,7 @@
       "current_price": 4550,
       "original_price": 5500,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:46.706Z",
+      "last_checked": "2026-09-27T14:57:58.225Z",
       "last_error": null
     },
     {
@@ -761,7 +761,7 @@
       "current_price": 4500,
       "original_price": 5500,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:46.934Z",
+      "last_checked": "2026-09-27T14:57:58.438Z",
       "last_error": null
     },
     {
@@ -775,7 +775,7 @@
       "current_price": 7808,
       "original_price": 8748,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:50.445Z",
+      "last_checked": "2026-09-27T14:58:01.142Z",
       "last_error": null
     },
     {
@@ -789,7 +789,7 @@
       "current_price": 6897,
       "original_price": 7500,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:47.289Z",
+      "last_checked": "2026-09-27T14:57:58.786Z",
       "last_error": null
     },
     {
@@ -803,7 +803,7 @@
       "current_price": 4999,
       "original_price": 8860,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:47.512Z",
+      "last_checked": "2026-09-27T14:57:58.937Z",
       "last_error": null
     },
     {
@@ -814,10 +814,10 @@
       "css_selector": "shopifyvariant:price, jsonld:price, .price-item--sale, .price__regular .price-item--regular, meta[property=\"og:price:amount\"]",
       "original_selector": "shopifyvariant:original, .price__sale .price-item--regular",
       "stock_selector": "shopifyvariant:available, jsonld:availability, button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 5399,
-      "original_price": 8999,
+      "current_price": 6749,
+      "original_price": 7499,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:48.244Z",
+      "last_checked": "2026-09-27T14:57:59.685Z",
       "last_error": null
     },
     {
@@ -828,10 +828,10 @@
       "css_selector": "meta[property=\"product:price:amount\"]",
       "original_selector": null,
       "stock_selector": ".stock-status, .alert-danger, button.btn-cart",
-      "current_price": 6238,
+      "current_price": 6780,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:50.288Z",
+      "last_checked": "2026-09-27T14:58:01.524Z",
       "last_error": null
     },
     {
@@ -843,9 +843,9 @@
       "original_selector": "shopifyvariant:original, .price__sale .price-item--regular",
       "stock_selector": "shopifyvariant:available, jsonld:availability, button[name=\"add\"], .product-form__submit, [name=\"add\"]",
       "current_price": 5599,
-      "original_price": 7299,
+      "original_price": 6999,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:48.313Z",
+      "last_checked": "2026-09-27T14:57:59.752Z",
       "last_error": null
     },
     {
@@ -856,10 +856,10 @@
       "css_selector": "jsonld:price, meta[property=\"product:price:amount\"]",
       "original_selector": null,
       "stock_selector": "jsonld:availability, .product-stock",
-      "current_price": 5748,
+      "current_price": 6248,
       "original_price": null,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:50.790Z",
+      "last_checked": "2026-09-27T14:58:02.017Z",
       "last_error": null
     },
     {
@@ -873,7 +873,7 @@
       "current_price": 6697,
       "original_price": 8000,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:48.864Z",
+      "last_checked": "2026-09-27T14:58:00.188Z",
       "last_error": null
     },
     {
@@ -887,7 +887,7 @@
       "current_price": 7800,
       "original_price": 8500,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:49.056Z",
+      "last_checked": "2026-09-27T14:58:00.394Z",
       "last_error": null
     },
     {
@@ -901,7 +901,7 @@
       "current_price": 4897,
       "original_price": 5800,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:49.498Z",
+      "last_checked": "2026-09-27T14:58:00.742Z",
       "last_error": null
     },
     {
@@ -915,7 +915,7 @@
       "current_price": 5200,
       "original_price": 6000,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:49.702Z",
+      "last_checked": "2026-09-27T14:58:00.941Z",
       "last_error": null
     },
     {
@@ -926,10 +926,10 @@
       "css_selector": "jsonld:price, meta[property=\"product:price:amount\"]",
       "original_selector": null,
       "stock_selector": "jsonld:availability, .product-stock",
-      "current_price": 4002,
+      "current_price": 4350,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:52.208Z",
+      "last_checked": "2026-09-27T14:58:02.725Z",
       "last_error": null
     },
     {
@@ -940,10 +940,10 @@
       "css_selector": "jsonld:price, meta[property=\"product:price:amount\"]",
       "original_selector": null,
       "stock_selector": "jsonld:availability, .product-stock",
-      "current_price": 4002,
+      "current_price": 4350,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:52.962Z",
+      "last_checked": "2026-09-27T14:58:03.178Z",
       "last_error": null
     },
     {
@@ -957,7 +957,7 @@
       "current_price": 4750,
       "original_price": 6400,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:51.067Z",
+      "last_checked": "2026-09-27T14:58:01.737Z",
       "last_error": null
     },
     {
@@ -968,10 +968,10 @@
       "css_selector": "shopifyvariant:price, jsonld:price, .price-item--sale, .price__regular .price-item--regular, meta[property=\"og:price:amount\"]",
       "original_selector": "shopifyvariant:original, .price__sale .price-item--regular",
       "stock_selector": "shopifyvariant:available, jsonld:availability, button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 4549,
+      "current_price": 5849,
       "original_price": 6499,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:51.257Z",
+      "last_checked": "2026-09-27T14:58:02.463Z",
       "last_error": null
     },
     {
@@ -985,7 +985,7 @@
       "current_price": 5497,
       "original_price": 6150,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:51.427Z",
+      "last_checked": "2026-09-27T14:58:02.223Z",
       "last_error": null
     },
     {
@@ -999,7 +999,7 @@
       "current_price": 5500,
       "original_price": 6800,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:51.698Z",
+      "last_checked": "2026-09-27T14:58:02.913Z",
       "last_error": null
     },
     {
@@ -1010,10 +1010,10 @@
       "css_selector": "jsonld:price, meta[property=\"product:price:amount\"]",
       "original_selector": null,
       "stock_selector": "jsonld:availability, .product-stock",
-      "current_price": 4775,
+      "current_price": 5190,
       "original_price": null,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:52.689Z",
+      "last_checked": "2026-09-27T14:58:03.459Z",
       "last_error": null
     },
     {
@@ -1024,10 +1024,10 @@
       "css_selector": "shopifyvariant:price, jsonld:price, .price-item--sale, .price__regular .price-item--regular, meta[property=\"og:price:amount\"]",
       "original_selector": "shopifyvariant:original, .price__sale .price-item--regular",
       "stock_selector": "shopifyvariant:available, jsonld:availability, button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 5963,
+      "current_price": 5619,
       "original_price": 8519,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:53.365Z",
+      "last_checked": "2026-09-27T14:58:03.945Z",
       "last_error": null
     },
     {
@@ -1041,7 +1041,7 @@
       "current_price": 4925,
       "original_price": 5925,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:54.608Z",
+      "last_checked": "2026-09-27T14:58:05.999Z",
       "last_error": null
     },
     {
@@ -1052,10 +1052,10 @@
       "css_selector": "jsonld:price, meta[property=\"product:price:amount\"]",
       "original_selector": null,
       "stock_selector": "jsonld:availability, .product-stock",
-      "current_price": 3816,
+      "current_price": 4148,
       "original_price": null,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:53.707Z",
+      "last_checked": "2026-09-27T14:58:04.381Z",
       "last_error": null
     },
     {
@@ -1069,7 +1069,7 @@
       "current_price": 4950,
       "original_price": 5450,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:53.985Z",
+      "last_checked": "2026-09-27T14:58:03.707Z",
       "last_error": null
     },
     {
@@ -1083,7 +1083,7 @@
       "current_price": 4950,
       "original_price": 5500,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:54.239Z",
+      "last_checked": "2026-09-27T14:58:04.111Z",
       "last_error": null
     },
     {
@@ -1094,10 +1094,10 @@
       "css_selector": "shopifyvariant:price, jsonld:price, .price-item--sale, .price__regular .price-item--regular, meta[property=\"og:price:amount\"]",
       "original_selector": "shopifyvariant:original, .price__sale .price-item--regular",
       "stock_selector": "shopifyvariant:available, jsonld:availability, button[name=\"add\"], .product-form__submit, [name=\"add\"]",
-      "current_price": 4199,
+      "current_price": 5399,
       "original_price": 5999,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:54.448Z",
+      "last_checked": "2026-09-27T14:58:04.613Z",
       "last_error": null
     },
     {
@@ -1111,7 +1111,7 @@
       "current_price": 4980,
       "original_price": 5900,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:54.953Z",
+      "last_checked": "2026-09-27T14:58:04.953Z",
       "last_error": null
     },
     {
@@ -1125,7 +1125,7 @@
       "current_price": 5297,
       "original_price": 5800,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:44:54.696Z",
+      "last_checked": "2026-09-27T14:58:04.754Z",
       "last_error": null
     },
     {
@@ -1136,10 +1136,10 @@
       "css_selector": "jsonld:price, meta[property=\"product:price:amount\"]",
       "original_selector": null,
       "stock_selector": "jsonld:availability, .product-stock",
-      "current_price": 5748,
+      "current_price": 6248,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:55.448Z",
+      "last_checked": "2026-09-27T14:58:05.578Z",
       "last_error": null
     },
     {
@@ -1153,7 +1153,7 @@
       "current_price": 5400,
       "original_price": 7500,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:55.132Z",
+      "last_checked": "2026-09-27T14:58:05.240Z",
       "last_error": null
     },
     {
@@ -1167,7 +1167,7 @@
       "current_price": 6400,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:56.183Z",
+      "last_checked": "2026-09-27T14:58:05.885Z",
       "last_error": null
     },
     {
@@ -1181,7 +1181,7 @@
       "current_price": 6950,
       "original_price": 8000,
       "in_stock": true,
-      "last_checked": "2026-09-19T10:44:56.131Z",
+      "last_checked": "2026-09-27T14:58:06.401Z",
       "last_error": null
     },
     {
@@ -1195,7 +1195,7 @@
       "current_price": 4950,
       "original_price": 6950,
       "in_stock": false,
-      "last_checked": "2026-09-19T10:47:47.714Z",
+      "last_checked": "2026-09-27T14:58:05.782Z",
       "last_error": null
     },
     {
@@ -1209,7 +1209,7 @@
       "current_price": 5300,
       "original_price": 5800,
       "in_stock": false,
-      "last_checked": "2026-09-22T14:42:45.766Z",
+      "last_checked": "2026-09-27T14:58:06.212Z",
       "last_error": null
     },
     {
@@ -1223,7 +1223,7 @@
       "current_price": 5500,
       "original_price": 5800,
       "in_stock": false,
-      "last_checked": "2026-09-22T14:43:27.430Z",
+      "last_checked": "2026-09-27T14:58:06.624Z",
       "last_error": null
     },
     {
@@ -1237,7 +1237,7 @@
       "current_price": 4877,
       "original_price": 5400,
       "in_stock": true,
-      "last_checked": "2026-09-22T14:49:27.452Z",
+      "last_checked": "2026-09-27T14:58:06.782Z",
       "last_error": null
     },
     {
@@ -1251,7 +1251,7 @@
       "current_price": 4950,
       "original_price": 5500,
       "in_stock": true,
-      "last_checked": "2026-09-22T14:49:50.894Z",
+      "last_checked": "2026-09-27T14:58:07.242Z",
       "last_error": null
     },
     {
@@ -1265,7 +1265,7 @@
       "current_price": 4899,
       "original_price": 6499,
       "in_stock": true,
-      "last_checked": "2026-09-22T14:50:10.032Z",
+      "last_checked": "2026-09-27T14:58:07.355Z",
       "last_error": null
     },
     {
@@ -1279,7 +1279,7 @@
       "current_price": 5125,
       "original_price": 5750,
       "in_stock": true,
-      "last_checked": "2026-09-22T14:50:38.429Z",
+      "last_checked": "2026-09-27T14:58:09.307Z",
       "last_error": null
     },
     {
@@ -1290,10 +1290,10 @@
       "css_selector": "jsonld:price, meta[property=\"product:price:amount\"]",
       "original_selector": null,
       "stock_selector": "jsonld:availability, .product-stock",
-      "current_price": 4959,
+      "current_price": 5390,
       "original_price": null,
       "in_stock": true,
-      "last_checked": "2026-09-22T14:51:06.025Z",
+      "last_checked": "2026-09-27T14:58:07.843Z",
       "last_error": null
     }
   ],
@@ -3121,7 +3121,493 @@
       "listing_id": 432,
       "price": 4959,
       "checked_at": "2026-09-22T14:51:06.025Z"
+    },
+    {
+      "id": 434,
+      "listing_id": 8,
+      "price": 5799,
+      "checked_at": "2026-09-27T14:57:48.529Z"
+    },
+    {
+      "id": 435,
+      "listing_id": 16,
+      "price": 2350,
+      "checked_at": "2026-09-27T14:57:48.837Z"
+    },
+    {
+      "id": 436,
+      "listing_id": 24,
+      "price": 4399,
+      "checked_at": "2026-09-27T14:57:49.119Z"
+    },
+    {
+      "id": 437,
+      "listing_id": 26,
+      "price": 4399,
+      "checked_at": "2026-09-27T14:57:49.883Z"
+    },
+    {
+      "id": 438,
+      "listing_id": 28,
+      "price": 5980,
+      "checked_at": "2026-09-27T14:57:50.064Z"
+    },
+    {
+      "id": 439,
+      "listing_id": 19,
+      "price": 2179,
+      "checked_at": "2026-09-27T14:57:50.336Z"
+    },
+    {
+      "id": 440,
+      "listing_id": 22,
+      "price": 5135,
+      "checked_at": "2026-09-27T14:57:50.741Z"
+    },
+    {
+      "id": 441,
+      "listing_id": 30,
+      "price": 4500,
+      "checked_at": "2026-09-27T14:57:50.954Z"
+    },
+    {
+      "id": 442,
+      "listing_id": 37,
+      "price": 3499,
+      "checked_at": "2026-09-27T14:57:51.085Z"
+    },
+    {
+      "id": 443,
+      "listing_id": 41,
+      "price": 5759,
+      "checked_at": "2026-09-27T14:57:51.777Z"
+    },
+    {
+      "id": 444,
+      "listing_id": 44,
+      "price": 7649,
+      "checked_at": "2026-09-27T14:57:51.984Z"
+    },
+    {
+      "id": 445,
+      "listing_id": 11,
+      "price": 7907,
+      "checked_at": "2026-09-27T14:57:52.105Z"
+    },
+    {
+      "id": 446,
+      "listing_id": 33,
+      "price": 4450,
+      "checked_at": "2026-09-27T14:57:52.459Z"
+    },
+    {
+      "id": 447,
+      "listing_id": 51,
+      "price": 2899,
+      "checked_at": "2026-09-27T14:57:52.547Z"
+    },
+    {
+      "id": 448,
+      "listing_id": 53,
+      "price": 2950,
+      "checked_at": "2026-09-27T14:57:52.774Z"
+    },
+    {
+      "id": 449,
+      "listing_id": 48,
+      "price": 7025,
+      "checked_at": "2026-09-27T14:57:53.018Z"
+    },
+    {
+      "id": 450,
+      "listing_id": 60,
+      "price": 6950,
+      "checked_at": "2026-09-27T14:57:53.340Z"
+    },
+    {
+      "id": 451,
+      "listing_id": 55,
+      "price": 2790,
+      "checked_at": "2026-09-27T14:57:53.656Z"
+    },
+    {
+      "id": 452,
+      "listing_id": 58,
+      "price": 6980,
+      "checked_at": "2026-09-27T14:57:54.055Z"
+    },
+    {
+      "id": 453,
+      "listing_id": 62,
+      "price": 7689,
+      "checked_at": "2026-09-27T14:57:54.249Z"
+    },
+    {
+      "id": 454,
+      "listing_id": 64,
+      "price": 6499,
+      "checked_at": "2026-09-27T14:57:54.383Z"
+    },
+    {
+      "id": 455,
+      "listing_id": 66,
+      "price": 6900,
+      "checked_at": "2026-09-27T14:57:55.047Z"
+    },
+    {
+      "id": 456,
+      "listing_id": 77,
+      "price": 2450,
+      "checked_at": "2026-09-27T14:57:55.222Z"
+    },
+    {
+      "id": 457,
+      "listing_id": 79,
+      "price": 4897,
+      "checked_at": "2026-09-27T14:57:55.352Z"
+    },
+    {
+      "id": 458,
+      "listing_id": 39,
+      "price": 4304,
+      "checked_at": "2026-09-27T14:57:55.494Z"
+    },
+    {
+      "id": 459,
+      "listing_id": 83,
+      "price": 5200,
+      "checked_at": "2026-09-27T14:57:55.655Z"
+    },
+    {
+      "id": 460,
+      "listing_id": 94,
+      "price": 6200,
+      "checked_at": "2026-09-27T14:57:55.804Z"
+    },
+    {
+      "id": 461,
+      "listing_id": 96,
+      "price": 6500,
+      "checked_at": "2026-09-27T14:57:55.956Z"
+    },
+    {
+      "id": 462,
+      "listing_id": 98,
+      "price": 7500,
+      "checked_at": "2026-09-27T14:57:56.158Z"
+    },
+    {
+      "id": 463,
+      "listing_id": 85,
+      "price": 4297,
+      "checked_at": "2026-09-27T14:57:56.295Z"
+    },
+    {
+      "id": 464,
+      "listing_id": 101,
+      "price": 5397,
+      "checked_at": "2026-09-27T14:57:56.445Z"
+    },
+    {
+      "id": 465,
+      "listing_id": 103,
+      "price": 5949,
+      "checked_at": "2026-09-27T14:57:56.745Z"
+    },
+    {
+      "id": 466,
+      "listing_id": 110,
+      "price": 3697,
+      "checked_at": "2026-09-27T14:57:56.911Z"
+    },
+    {
+      "id": 467,
+      "listing_id": 107,
+      "price": 4800,
+      "checked_at": "2026-09-27T14:57:57.076Z"
+    },
+    {
+      "id": 468,
+      "listing_id": 112,
+      "price": 3750,
+      "checked_at": "2026-09-27T14:57:57.236Z"
+    },
+    {
+      "id": 469,
+      "listing_id": 114,
+      "price": 4200,
+      "checked_at": "2026-09-27T14:57:57.384Z"
+    },
+    {
+      "id": 470,
+      "listing_id": 105,
+      "price": 5500,
+      "checked_at": "2026-09-27T14:57:57.599Z"
+    },
+    {
+      "id": 471,
+      "listing_id": 119,
+      "price": 4397,
+      "checked_at": "2026-09-27T14:57:57.747Z"
+    },
+    {
+      "id": 472,
+      "listing_id": 116,
+      "price": 4049,
+      "checked_at": "2026-09-27T14:57:57.957Z"
+    },
+    {
+      "id": 473,
+      "listing_id": 128,
+      "price": 4550,
+      "checked_at": "2026-09-27T14:57:58.225Z"
+    },
+    {
+      "id": 474,
+      "listing_id": 130,
+      "price": 4500,
+      "checked_at": "2026-09-27T14:57:58.438Z"
+    },
+    {
+      "id": 475,
+      "listing_id": 183,
+      "price": 6897,
+      "checked_at": "2026-09-27T14:57:58.786Z"
+    },
+    {
+      "id": 476,
+      "listing_id": 185,
+      "price": 4999,
+      "checked_at": "2026-09-27T14:57:58.937Z"
+    },
+    {
+      "id": 477,
+      "listing_id": 126,
+      "price": 4930,
+      "checked_at": "2026-09-27T14:57:59.262Z"
+    },
+    {
+      "id": 478,
+      "listing_id": 121,
+      "price": 5449,
+      "checked_at": "2026-09-27T14:57:59.439Z"
+    },
+    {
+      "id": 479,
+      "listing_id": 187,
+      "price": 6749,
+      "checked_at": "2026-09-27T14:57:59.685Z"
+    },
+    {
+      "id": 480,
+      "listing_id": 193,
+      "price": 5599,
+      "checked_at": "2026-09-27T14:57:59.752Z"
+    },
+    {
+      "id": 481,
+      "listing_id": 265,
+      "price": 6697,
+      "checked_at": "2026-09-27T14:58:00.188Z"
+    },
+    {
+      "id": 482,
+      "listing_id": 267,
+      "price": 7800,
+      "checked_at": "2026-09-27T14:58:00.394Z"
+    },
+    {
+      "id": 483,
+      "listing_id": 270,
+      "price": 4897,
+      "checked_at": "2026-09-27T14:58:00.742Z"
+    },
+    {
+      "id": 484,
+      "listing_id": 272,
+      "price": 5200,
+      "checked_at": "2026-09-27T14:58:00.941Z"
+    },
+    {
+      "id": 485,
+      "listing_id": 133,
+      "price": 7808,
+      "checked_at": "2026-09-27T14:58:01.142Z"
+    },
+    {
+      "id": 486,
+      "listing_id": 189,
+      "price": 6780,
+      "checked_at": "2026-09-27T14:58:01.524Z"
+    },
+    {
+      "id": 487,
+      "listing_id": 277,
+      "price": 4750,
+      "checked_at": "2026-09-27T14:58:01.737Z"
+    },
+    {
+      "id": 488,
+      "listing_id": 199,
+      "price": 6248,
+      "checked_at": "2026-09-27T14:58:02.017Z"
+    },
+    {
+      "id": 489,
+      "listing_id": 282,
+      "price": 5497,
+      "checked_at": "2026-09-27T14:58:02.223Z"
+    },
+    {
+      "id": 490,
+      "listing_id": 279,
+      "price": 5849,
+      "checked_at": "2026-09-27T14:58:02.463Z"
+    },
+    {
+      "id": 491,
+      "listing_id": 274,
+      "price": 4350,
+      "checked_at": "2026-09-27T14:58:02.725Z"
+    },
+    {
+      "id": 492,
+      "listing_id": 284,
+      "price": 5500,
+      "checked_at": "2026-09-27T14:58:02.913Z"
+    },
+    {
+      "id": 493,
+      "listing_id": 275,
+      "price": 4350,
+      "checked_at": "2026-09-27T14:58:03.178Z"
+    },
+    {
+      "id": 494,
+      "listing_id": 286,
+      "price": 5190,
+      "checked_at": "2026-09-27T14:58:03.459Z"
+    },
+    {
+      "id": 495,
+      "listing_id": 304,
+      "price": 4950,
+      "checked_at": "2026-09-27T14:58:03.707Z"
+    },
+    {
+      "id": 496,
+      "listing_id": 288,
+      "price": 5619,
+      "checked_at": "2026-09-27T14:58:03.945Z"
+    },
+    {
+      "id": 497,
+      "listing_id": 306,
+      "price": 4950,
+      "checked_at": "2026-09-27T14:58:04.111Z"
+    },
+    {
+      "id": 498,
+      "listing_id": 300,
+      "price": 4148,
+      "checked_at": "2026-09-27T14:58:04.381Z"
+    },
+    {
+      "id": 499,
+      "listing_id": 308,
+      "price": 5399,
+      "checked_at": "2026-09-27T14:58:04.613Z"
+    },
+    {
+      "id": 500,
+      "listing_id": 313,
+      "price": 5297,
+      "checked_at": "2026-09-27T14:58:04.754Z"
+    },
+    {
+      "id": 501,
+      "listing_id": 310,
+      "price": 4980,
+      "checked_at": "2026-09-27T14:58:04.953Z"
+    },
+    {
+      "id": 502,
+      "listing_id": 317,
+      "price": 5400,
+      "checked_at": "2026-09-27T14:58:05.240Z"
+    },
+    {
+      "id": 503,
+      "listing_id": 315,
+      "price": 6248,
+      "checked_at": "2026-09-27T14:58:05.578Z"
+    },
+    {
+      "id": 504,
+      "listing_id": 416,
+      "price": 4950,
+      "checked_at": "2026-09-27T14:58:05.782Z"
+    },
+    {
+      "id": 505,
+      "listing_id": 319,
+      "price": 6400,
+      "checked_at": "2026-09-27T14:58:05.885Z"
+    },
+    {
+      "id": 506,
+      "listing_id": 298,
+      "price": 4925,
+      "checked_at": "2026-09-27T14:58:05.999Z"
+    },
+    {
+      "id": 507,
+      "listing_id": 419,
+      "price": 5300,
+      "checked_at": "2026-09-27T14:58:06.212Z"
+    },
+    {
+      "id": 508,
+      "listing_id": 328,
+      "price": 6950,
+      "checked_at": "2026-09-27T14:58:06.401Z"
+    },
+    {
+      "id": 509,
+      "listing_id": 421,
+      "price": 5500,
+      "checked_at": "2026-09-27T14:58:06.624Z"
+    },
+    {
+      "id": 510,
+      "listing_id": 424,
+      "price": 4877,
+      "checked_at": "2026-09-27T14:58:06.782Z"
+    },
+    {
+      "id": 511,
+      "listing_id": 426,
+      "price": 4950,
+      "checked_at": "2026-09-27T14:58:07.242Z"
+    },
+    {
+      "id": 512,
+      "listing_id": 428,
+      "price": 4899,
+      "checked_at": "2026-09-27T14:58:07.355Z"
+    },
+    {
+      "id": 513,
+      "listing_id": 432,
+      "price": 5390,
+      "checked_at": "2026-09-27T14:58:07.843Z"
+    },
+    {
+      "id": 514,
+      "listing_id": 430,
+      "price": 5125,
+      "checked_at": "2026-09-27T14:58:09.307Z"
     }
   ],
-  "nextId": 434
+  "nextId": 515
 }

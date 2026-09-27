@@ -271,6 +271,13 @@ textarea { resize: vertical; }
   font-weight: 600;
 }
 
+.analysis-link {
+  display: block;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+}
+
 .text-btn {
   border: none;
   background: none;
@@ -409,6 +416,15 @@ textarea { resize: vertical; }
 .section-head h3 { font-size: 1.05rem; }
 
 .listings-list { margin-top: 10px; display: flex; flex-direction: column; gap: 10px; }
+
+.price-chart {
+  margin-top: 10px;
+}
+.price-chart-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
 .listing-row {
   display: flex;

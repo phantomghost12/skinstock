@@ -62,6 +62,19 @@
       <button id="addListingBtn" class="secondary-btn">+ Add a website for this product</button>
     </section>
 
+    <section id="analysisLinkSection">
+      <a id="analysisLink" class="secondary-btn analysis-link" href="#" target="_blank" rel="noopener" hidden>Skin charisma analysis &#8599;</a>
+      <p id="analysisLinkEmpty" class="muted small" hidden>No skin charisma analysis link added yet — add one from Edit product.</p>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h3>Price history</h3>
+        <span class="muted">past year</span>
+      </div>
+      <div id="priceHistoryChart" class="price-chart"></div>
+    </section>
+
     <button id="deleteProductBtn" class="danger-link">Delete this product</button>
   </div>
 </main>
@@ -144,6 +157,9 @@
 
     <label>Image URL <span class="muted">(optional)</span></label>
     <input id="editImage" type="text" placeholder="https://..." />
+
+    <label>Skin charisma analysis link <span class="muted">(optional)</span></label>
+    <input id="editAnalysisUrl" type="text" placeholder="https://..." />
 
     <button id="saveEditBtn" class="primary-btn">Save changes</button>
   </div>

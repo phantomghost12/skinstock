@@ -133,7 +133,7 @@ app.get('/api/products/:id', (req, res) => {
 });
 
 app.post('/api/products', (req, res) => {
-  const { name, category, image_url, note } = req.body;
+  const { name, category, image_url, note, analysis_url } = req.body;
   if (!name || !name.trim()) {
     return res.status(400).json({ error: 'A product name is required.' });
   }
@@ -144,6 +144,7 @@ app.post('/api/products', (req, res) => {
     category: (category || '').trim() || 'Uncategorized',
     image_url: image_url || '',
     note: note || '',
+    analysis_url: (analysis_url || '').trim(),
     created_at: new Date().toISOString(),
   };
   data.products.push(product);
@@ -156,11 +157,12 @@ app.put('/api/products/:id', (req, res) => {
   const product = data.products.find((p) => p.id === Number(req.params.id));
   if (!product) return res.status(404).json({ error: 'Product not found' });
 
-  const { name, category, image_url, note } = req.body;
+  const { name, category, image_url, note, analysis_url } = req.body;
   if (name !== undefined) product.name = name;
   if (category !== undefined) product.category = category || 'Uncategorized';
   if (image_url !== undefined) product.image_url = image_url;
   if (note !== undefined) product.note = note;
+  if (analysis_url !== undefined) product.analysis_url = analysis_url.trim();
 
   db.save(data);
   res.json(productWithListings(data, product));
@@ -314,6 +316,43 @@ app.get('/api/listings/:id/history', (req, res) => {
   const data = db.load();
   const id = Number(req.params.id);
   res.json(data.history.filter((h) => h.listing_id === id));
+});
+
+// Aggregates every listing's saved history into one "lowest price seen
+// that day, across all sites tracked" line — this is what the price-over-
+// time graph on the product page draws. Naturally starts sparse (or
+// empty) for a freshly-added product and fills in as refreshes accumulate.
+//
+// Only listings that are CURRENTLY in stock are considered. A listing
+// that's out of stock now may be sitting on a price from a year+ ago
+// (inflation means that price is unlikely to ever be hit again by a real
+// sale), so including it would drag the chart's "lowest" line down to a
+// number that's no longer meaningful. If a listing later comes back in
+// stock, its history rejoins the chart automatically on the next refresh.
+app.get('/api/products/:id/price-history', (req, res) => {
+  const data = db.load();
+  const productId = Number(req.params.id);
+  const listingIds = new Set(
+    data.listings
+      .filter((l) => l.product_id === productId && l.in_stock !== false)
+      .map((l) => l.id)
+  );
+  const oneYearAgo = Date.now() - 365 * 24 * 60 * 60 * 1000;
+
+  const byDay = {};
+  for (const h of data.history) {
+    if (!listingIds.has(h.listing_id)) continue;
+    if (typeof h.price !== 'number') continue;
+    const t = new Date(h.checked_at).getTime();
+    if (Number.isNaN(t) || t < oneYearAgo) continue;
+    const day = h.checked_at.slice(0, 10); // YYYY-MM-DD
+    if (!(day in byDay) || h.price < byDay[day]) byDay[day] = h.price;
+  }
+
+  const points = Object.keys(byDay)
+    .sort()
+    .map((date) => ({ date, price: byDay[date] }));
+  res.json(points);
 });
 
 // ---------- backup / restore ----------

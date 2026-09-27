@@ -151,10 +151,64 @@ async function openDetail(id) {
     ? 'Last checked ' + timeAgo(mostRecent)
     : '';
 
+  const historyPoints = await api(`/products/${id}/price-history`);
+  renderPriceChart(el('priceHistoryChart'), historyPoints);
+
+  if (p.analysis_url) {
+    el('analysisLink').href = p.analysis_url;
+    el('analysisLink').hidden = false;
+    el('analysisLinkEmpty').hidden = true;
+  } else {
+    el('analysisLink').hidden = true;
+    el('analysisLinkEmpty').hidden = false;
+  }
+
   const enteringDetailFresh = !el('homeView').hidden; // were we on the home screen just now?
   state.currentProduct = p;
   showView('detailView');
   if (enteringDetailFresh) pushNavState();
+}
+
+// Draws the "lowest price seen per day" line as a plain inline SVG — no
+// charting library needed for one simple line. Shows a friendly message
+// instead of a broken/empty chart until there's more than one data point.
+function renderPriceChart(container, points) {
+  if (!points || points.length < 2) {
+    container.innerHTML = `<p class="muted small">Price history will appear here once there's more than one day of data — check back after a few refreshes.</p>`;
+    return;
+  }
+  const width = 320, height = 140, padding = 30;
+  const prices = points.map((p) => p.price);
+  const minP = Math.min(...prices);
+  const maxP = Math.max(...prices);
+  const range = maxP - minP || 1;
+  const n = points.length;
+  const xAt = (i) => padding + (n === 1 ? 0 : (i / (n - 1)) * (width - padding * 2));
+  const yAt = (price) => height - padding - ((price - minP) / range) * (height - padding * 2);
+
+  const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i).toFixed(1)} ${yAt(p.price).toFixed(1)}`).join(' ');
+  const dots = points
+    .map((p, i) => `<circle cx="${xAt(i).toFixed(1)}" cy="${yAt(p.price).toFixed(1)}" r="3" fill="var(--moss)"></circle>`)
+    .join('');
+  const firstLabel = formatChartDate(points[0].date);
+  const lastLabel = formatChartDate(points[n - 1].date);
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${width} ${height}" class="price-chart-svg" preserveAspectRatio="xMidYMid meet">
+      <line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="var(--line)" stroke-width="1" />
+      <path d="${pathD}" fill="none" stroke="var(--moss)" stroke-width="2" />
+      ${dots}
+      <text x="${padding}" y="${height - 10}" font-size="9" fill="var(--ink-soft)">${firstLabel}</text>
+      <text x="${width - padding}" y="${height - 10}" font-size="9" text-anchor="end" fill="var(--ink-soft)">${lastLabel}</text>
+      <text x="${padding}" y="14" font-size="10" fill="var(--moss-dark)" font-weight="600">Rs. ${formatPrice(maxP)}</text>
+      <text x="${padding}" y="${height - padding - 6}" font-size="10" fill="var(--moss-dark)" font-weight="600">Rs. ${formatPrice(minP)}</text>
+    </svg>
+  `;
+}
+
+function formatChartDate(isoDay) {
+  const d = new Date(isoDay + 'T00:00:00Z');
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
 function listingRowHtml(l, lowest) {
@@ -423,6 +477,7 @@ function openEditProductModal() {
   el('editName').value = p.name || '';
   el('editCategory').value = p.category || '';
   el('editImage').value = p.image_url || '';
+  el('editAnalysisUrl').value = p.analysis_url || '';
   const opts = el('categoryOptionsEdit');
   opts.innerHTML = state.categories.map((c) => `<option value="${escapeAttr(c)}">`).join('');
   el('editProductModal').hidden = false;
@@ -439,6 +494,7 @@ async function saveEditProduct() {
       name,
       category: el('editCategory').value.trim(),
       image_url: el('editImage').value.trim(),
+      analysis_url: el('editAnalysisUrl').value.trim(),
     }),
   });
   el('editProductModal').hidden = true;
