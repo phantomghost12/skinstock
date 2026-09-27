@@ -332,13 +332,16 @@ app.get('/api/listings/:id/history', (req, res) => {
 app.get('/api/products/:id/price-history', (req, res) => {
   const data = db.load();
   const productId = Number(req.params.id);
-  const listingIds = new Set(
-    data.listings
-      .filter((l) => l.product_id === productId && l.in_stock !== false)
-      .map((l) => l.id)
+  const productListings = data.listings.filter(
+    (l) => l.product_id === productId && l.in_stock !== false
   );
+  const listingIds = new Set(productListings.map((l) => l.id));
+  const websiteNameById = new Map(productListings.map((l) => [l.id, l.website_name]));
   const oneYearAgo = Date.now() - 365 * 24 * 60 * 60 * 1000;
 
+  // Track which listing produced the lowest price each day, not just the
+  // number, so the graph can say "this was the price at <website>" when a
+  // point is tapped.
   const byDay = {};
   for (const h of data.history) {
     if (!listingIds.has(h.listing_id)) continue;
@@ -346,12 +349,18 @@ app.get('/api/products/:id/price-history', (req, res) => {
     const t = new Date(h.checked_at).getTime();
     if (Number.isNaN(t) || t < oneYearAgo) continue;
     const day = h.checked_at.slice(0, 10); // YYYY-MM-DD
-    if (!(day in byDay) || h.price < byDay[day]) byDay[day] = h.price;
+    if (!(day in byDay) || h.price < byDay[day].price) {
+      byDay[day] = { price: h.price, listing_id: h.listing_id };
+    }
   }
 
   const points = Object.keys(byDay)
     .sort()
-    .map((date) => ({ date, price: byDay[date] }));
+    .map((date) => ({
+      date,
+      price: byDay[date].price,
+      website_name: websiteNameById.get(byDay[date].listing_id) || null,
+    }));
   res.json(points);
 });
 

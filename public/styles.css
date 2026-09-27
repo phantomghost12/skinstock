@@ -425,6 +425,12 @@ textarea { resize: vertical; }
   height: auto;
   display: block;
 }
+.chart-dot-hit {
+  cursor: pointer;
+}
+.chart-detail {
+  margin-top: 6px;
+}
 
 .listing-row {
   display: flex;

@@ -173,6 +173,7 @@ async function openDetail(id) {
 // charting library needed for one simple line. Shows a friendly message
 // instead of a broken/empty chart until there's more than one data point.
 function renderPriceChart(container, points) {
+  el('priceHistoryDetail').hidden = true;
   if (!points || points.length < 2) {
     container.innerHTML = `<p class="muted small">Price history will appear here once there's more than one day of data — check back after a few refreshes.</p>`;
     return;
@@ -187,8 +188,18 @@ function renderPriceChart(container, points) {
   const yAt = (price) => height - padding - ((price - minP) / range) * (height - padding * 2);
 
   const pathD = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${xAt(i).toFixed(1)} ${yAt(p.price).toFixed(1)}`).join(' ');
+  // Each point gets a small visible dot plus a larger invisible circle on
+  // top of it purely to make it easy to tap on a phone screen — the visible
+  // dot alone (r=3) is too small a target to reliably hit.
   const dots = points
-    .map((p, i) => `<circle cx="${xAt(i).toFixed(1)}" cy="${yAt(p.price).toFixed(1)}" r="3" fill="var(--moss)"></circle>`)
+    .map((p, i) => {
+      const cx = xAt(i).toFixed(1);
+      const cy = yAt(p.price).toFixed(1);
+      return `
+        <circle cx="${cx}" cy="${cy}" r="3" fill="var(--moss)" class="chart-dot" data-point-index="${i}"></circle>
+        <circle cx="${cx}" cy="${cy}" r="12" fill="transparent" class="chart-dot-hit" data-point-index="${i}"></circle>
+      `;
+    })
     .join('');
   const firstLabel = formatChartDate(points[0].date);
   const lastLabel = formatChartDate(points[n - 1].date);
@@ -204,6 +215,20 @@ function renderPriceChart(container, points) {
       <text x="${padding}" y="${height - padding - 6}" font-size="10" fill="var(--moss-dark)" font-weight="600">Rs. ${formatPrice(minP)}</text>
     </svg>
   `;
+
+  container.querySelectorAll('.chart-dot-hit').forEach((hit) => {
+    hit.addEventListener('click', () => showChartPointDetail(points[Number(hit.dataset.pointIndex)]));
+  });
+}
+
+// Fills in the small text line under the chart when a dot is tapped —
+// which website that day's lowest price actually came from.
+function showChartPointDetail(point) {
+  const label = el('priceHistoryDetail');
+  const dateLabel = formatChartDate(point.date);
+  const siteLabel = point.website_name ? point.website_name : 'an unknown listing';
+  label.textContent = `${dateLabel}: Rs. ${formatPrice(point.price)} at ${siteLabel}`;
+  label.hidden = false;
 }
 
 function formatChartDate(isoDay) {
@@ -537,13 +562,33 @@ el('deleteProductBtn').onclick = async () => {
   loadProducts();
 };
 
+// This only changes what the button LOOKS like while waiting — it does not
+// touch how /api/scrape/run itself behaves. That endpoint still replies
+// immediately and scrapes in the background, which is what lets the
+// cron-job.org 12-hourly trigger avoid its 30-second timeout; cron never
+// calls /api/scrape/status, so this polling loop can't affect it.
 el('refreshAllBtn').onclick = async () => {
+  if (state.refreshingAll) return; // already spinning — ignore extra taps
+  state.refreshingAll = true;
   el('refreshAllBtn').textContent = '…';
-  const result = await api('/scrape/run', { method: 'POST' });
-  await loadProducts();
-  if (!el('detailView').hidden) openDetail(state.currentProductId);
-  el('refreshAllBtn').innerHTML = '&#8635;';
-  if (result.seconds) console.log(`Checked ${result.checked} listing(s) in ${result.seconds}s`);
+  try {
+    await api('/scrape/run', { method: 'POST' });
+    // Poll until the background scrape actually finishes (or until we've
+    // waited a very long time, so a server hiccup can't freeze the icon
+    // forever) before switching the icon back.
+    const maxWaitMs = 5 * 60 * 1000;
+    const startedAt = Date.now();
+    while (Date.now() - startedAt < maxWaitMs) {
+      const status = await api('/scrape/status');
+      if (!status.inProgress) break;
+      await new Promise((r) => setTimeout(r, 2000));
+    }
+    await loadProducts();
+    if (!el('detailView').hidden) openDetail(state.currentProductId);
+  } finally {
+    el('refreshAllBtn').innerHTML = '&#8635;';
+    state.refreshingAll = false;
+  }
 };
 
 // ---------- backup / restore ----------
