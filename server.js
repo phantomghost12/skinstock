@@ -312,6 +312,25 @@ app.get('/api/scrape/status', (req, res) => {
   res.json(scrapeState);
 });
 
+// Every listing whose most recent check failed, with the product name and
+// the exact error — open /api/scrape/failures in a browser to review them
+// all at once instead of hunting through each product.
+app.get('/api/scrape/failures', (req, res) => {
+  const data = db.load();
+  const productNames = new Map(data.products.map((p) => [p.id, p.name]));
+  const failures = data.listings
+    .filter((l) => l.last_error)
+    .map((l) => ({
+      product: productNames.get(l.product_id) || '(unknown product)',
+      website: l.website_name,
+      url: l.url,
+      error: l.last_error,
+      last_checked: l.last_checked,
+      still_showing_old_price: l.current_price !== null,
+    }));
+  res.json({ count: failures.length, failures });
+});
+
 app.get('/api/listings/:id/history', (req, res) => {
   const data = db.load();
   const id = Number(req.params.id);

@@ -259,6 +259,13 @@ function listingRowHtml(l, lowest) {
   // Stock status is only ever shown when it's bad news — an in-stock
   // listing looks exactly like a listing with no stock tracking at all.
   const oosBadge = isOos ? `<div class="oos-badge">Out of stock</div>` : '';
+  // A failed check keeps the old price on screen, so without this the row
+  // looks perfectly healthy. Only shown when a price exists — otherwise the
+  // error is already displayed in place of the price above.
+  const staleErrorHtml =
+    l.current_price !== null && l.last_error
+      ? `<div class="listing-error listing-stale-error">Last check failed: ${escapeHtml(l.last_error)}</div>`
+      : '';
 
   return `
     <div class="listing-row ${isLowest ? 'lowest' : ''} ${isOos ? 'oos' : ''}">
@@ -269,6 +276,7 @@ function listingRowHtml(l, lowest) {
       </div>
       <div style="text-align:right;">
         ${priceHtml}
+        ${staleErrorHtml}
         ${oosBadge}
         <button class="edit-listing" data-edit-listing="${l.id}" title="Edit">&#9998;</button>
         <button class="remove-listing" data-remove-listing="${l.id}" title="Remove">&times;</button>
