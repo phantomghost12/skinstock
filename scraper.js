@@ -314,7 +314,7 @@ function checkStock($, stockSelectorList, variantId, variantBlocks) {
   return null;
 }
 
-async function scrapeListing(url, priceSelector, originalSelector, stockSelector) {
+async function scrapeListingOnce(url, priceSelector, originalSelector, stockSelector) {
   const response = await axios.get(url, {
     headers: REQUEST_HEADERS,
     timeout: 15000,
@@ -328,9 +328,13 @@ async function scrapeListing(url, priceSelector, originalSelector, stockSelector
 
   const current = extract($, priceSelector, variantId, variantBlocks);
   if (!current.found) {
+    // Record what the server actually received, so a block/challenge page
+    // can be told apart from a genuine layout change.
+    const pageTitle = ($('title').first().text() || '').trim().slice(0, 80);
+    const size = typeof response.data === 'string' ? response.data.length : 0;
     return {
       ok: false,
-      error: `No element matched the price selector "${priceSelector}". The site may have changed its layout.`,
+      error: `No element matched the price selector "${priceSelector}". The site may have changed its layout. (Received page titled "${pageTitle}", ${size} chars, HTTP ${response.status}.)`,
       rawText: null,
       price: null,
       originalPrice: null,
@@ -378,6 +382,25 @@ async function scrapeListing(url, priceSelector, originalSelector, stockSelector
     inStock,
     debugNote,
   };
+}
+
+// One automatic retry after a short pause. Many failures are temporary
+// (a connection timeout, or a site briefly serving a different page when
+// hit by several requests at once); a second attempt clears most of them.
+// Runs inside the background scrape, so it never delays cron's reply.
+async function scrapeListing(url, priceSelector, originalSelector, stockSelector, retries = 1) {
+  let lastError;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    if (attempt > 0) await new Promise((r) => setTimeout(r, 3000));
+    try {
+      const result = await scrapeListingOnce(url, priceSelector, originalSelector, stockSelector);
+      if (result.ok || attempt === retries) return result;
+      lastError = null;
+    } catch (err) {
+      lastError = err;
+      if (attempt === retries) throw err;
+    }
+  }
 }
 
 async function runWithConcurrency(items, concurrency, worker) {
