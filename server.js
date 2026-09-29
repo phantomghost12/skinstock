@@ -11,7 +11,24 @@ const cors = require('cors');
 const cron = require('node-cron');
 const path = require('path');
 const db = require('./db');
-const { scrapeListing, runWithConcurrency } = require('./scraper');
+const { scrapeListing, runWithConcurrency, runWithHostThrottle } = require('./scraper');
+
+// Cooldown after each request before that same host is hit again.
+const HOST_COOLDOWN_MS = Number(process.env.SCRAPE_HOST_COOLDOWN_MS || 1500);
+
+function hostnameOf(listing) {
+  try {
+    return new URL(listing.url).hostname;
+  } catch {
+    return listing.url; // malformed URL — treat it as its own "host" so it doesn't block others
+  }
+}
+
+function scrapeAll(data, listings) {
+  return runWithHostThrottle(listings, CONCURRENCY, HOST_COOLDOWN_MS, hostnameOf, (l) =>
+    checkOneListing(data, l)
+  );
+}
 
 const app = express();
 app.use(cors());
@@ -182,7 +199,7 @@ app.post('/api/products/:id/scrape', async (req, res) => {
   const product = data.products.find((p) => p.id === Number(req.params.id));
   if (!product) return res.status(404).json({ error: 'Product not found' });
   const listings = data.listings.filter((l) => l.product_id === product.id);
-  const results = await runWithConcurrency(listings, CONCURRENCY, (l) => checkOneListing(data, l));
+  const results = await scrapeAll(data, listings);
   db.save(data);
   res.json({ checked: results.length, results });
 });
@@ -282,7 +299,7 @@ async function runFullScrape() {
   scrapeState.lastStartedAt = new Date().toISOString();
   try {
     const data = db.load();
-    const results = await runWithConcurrency(data.listings, CONCURRENCY, (l) => checkOneListing(data, l));
+    const results = await scrapeAll(data, data.listings);
     db.save(data);
     scrapeState.lastChecked = results.length;
     scrapeState.lastFailed = results.filter((r) => !r.ok).length;
@@ -408,7 +425,7 @@ app.post('/api/restore', (req, res) => {
 if (process.env.SCHEDULE_CRON) {
   cron.schedule(process.env.SCHEDULE_CRON, async () => {
     const data = db.load();
-    await runWithConcurrency(data.listings, CONCURRENCY, (l) => checkOneListing(data, l));
+    await scrapeAll(data, data.listings);
     db.save(data);
     console.log(`[scrape] scheduled check ran at ${new Date().toISOString()}`);
   });

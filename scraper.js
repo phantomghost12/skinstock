@@ -419,4 +419,45 @@ async function runWithConcurrency(items, concurrency, worker) {
   return results;
 }
 
-module.exports = { scrapeListing, parsePrice, runWithConcurrency };
+// Bounded overall concurrency, but never two in-flight requests to the same
+// host at once, plus a short cooldown per host after each request finishes.
+// Several sites here (kmbelle.com in particular) return a rate-limit holding
+// page — HTTP 202, a couple hundred bytes, no title — when hit by more than
+// one request at a time from the same IP; a single isolated request works
+// fine. Different hosts still run in parallel, so overall throughput is
+// close to before as long as listings are spread across several sites.
+async function runWithHostThrottle(items, concurrency, perHostCooldownMs, getHostKey, worker) {
+  const results = new Array(items.length);
+  const pending = items.map((item, i) => ({ item, i, host: getHostKey(item) }));
+  const busyHosts = new Set();
+  let active = 0;
+
+  return new Promise((resolve) => {
+    function tryStart() {
+      for (let idx = 0; idx < pending.length && active < concurrency; ) {
+        const task = pending[idx];
+        if (busyHosts.has(task.host)) {
+          idx++;
+          continue;
+        }
+        pending.splice(idx, 1);
+        busyHosts.add(task.host);
+        active++;
+        (async () => {
+          try {
+            results[task.i] = await worker(task.item, task.i);
+          } finally {
+            await new Promise((r) => setTimeout(r, perHostCooldownMs));
+            busyHosts.delete(task.host);
+            active--;
+            tryStart();
+          }
+        })();
+      }
+      if (pending.length === 0 && active === 0) resolve(results);
+    }
+    tryStart();
+  });
+}
+
+module.exports = { scrapeListing, parsePrice, runWithConcurrency, runWithHostThrottle };
