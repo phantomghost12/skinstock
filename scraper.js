@@ -329,12 +329,26 @@ async function scrapeListingOnce(url, priceSelector, originalSelector, stockSele
   const current = extract($, priceSelector, variantId, variantBlocks);
   if (!current.found) {
     // Record what the server actually received, so a block/challenge page
-    // can be told apart from a genuine layout change.
+    // can be told apart from a genuine layout change. The body snippet and
+    // a couple of the more telling response headers are the difference
+    // between guessing and actually knowing what kind of page came back
+    // (a cache-warming placeholder, a bot challenge, a redirect, etc).
     const pageTitle = ($('title').first().text() || '').trim().slice(0, 80);
-    const size = typeof response.data === 'string' ? response.data.length : 0;
+    const raw = typeof response.data === 'string' ? response.data : '';
+    const size = raw.length;
+    const bodySnippet = raw.replace(/\s+/g, ' ').trim().slice(0, 200);
+    const h = response.headers || {};
+    const relevantHeaders = ['cache-control', 'cf-cache-status', 'retry-after', 'set-cookie', 'server', 'x-cache']
+      .filter((k) => h[k] !== undefined)
+      .map((k) => `${k}: ${Array.isArray(h[k]) ? h[k].join('; ') : h[k]}`)
+      .join(' | ');
     return {
       ok: false,
-      error: `No element matched the price selector "${priceSelector}". The site may have changed its layout. (Received page titled "${pageTitle}", ${size} chars, HTTP ${response.status}.)`,
+      error:
+        `No element matched the price selector "${priceSelector}". The site may have changed its layout. ` +
+        `(HTTP ${response.status}, ${size} chars, title "${pageTitle}". ` +
+        `Headers: ${relevantHeaders || 'none of the usual caching/challenge headers present'}. ` +
+        `Body starts: "${bodySnippet}")`,
       rawText: null,
       price: null,
       originalPrice: null,
