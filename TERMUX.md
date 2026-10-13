@@ -83,3 +83,66 @@ apps to save battery), the server stops and the app will show "can't
 connect" until you restart it with `node server.js` again. If that gets
 annoying, tell me and I'll show you how to use `termux-wake-lock` and a
 boot script so it stays running persistently in the background.
+
+## 7. Automatically refreshing the sites Render's IP is blocked from
+
+If you've moved the main app to Render (with cron-job.org triggering the
+regular refresh) so you no longer run this local server day-to-day, you
+can still use this phone — automatically, without opening Termux — to
+refresh just the listings a site is blocking from Render's IP. See
+`scripts/relay-blocked-hosts.js` for what it does and why.
+
+This uses Android's own job scheduler, so it runs on a timer even with
+Termux closed — you don't open the app or type anything after this
+one-time setup.
+
+### One-time setup
+
+```bash
+pkg install -y termux-api
+```
+
+Also install the separate **Termux:API** app from F-Droid (same place you
+got Termux) — the `pkg install` above is just the command-line half of it;
+without the app installed too, scheduling won't work:
+https://f-droid.org/en/packages/com.termux.api/
+
+Then create a small wrapper script (this is what the scheduler will
+actually run — environment variables set in your interactive shell aren't
+visible to scheduled jobs, so they're hardcoded here instead):
+
+```bash
+cat > ~/skinstock/scripts/run-relay.sh << 'SCRIPT'
+#!/data/data/com.termux/files/usr/bin/bash
+cd ~/skinstock
+export BASE_URL="https://your-app.onrender.com"
+export APP_PASSWORD=""
+export LOCAL_HOSTS="kmbelle.com"
+node scripts/relay-blocked-hosts.js >> ~/relay.log 2>&1
+SCRIPT
+chmod +x ~/skinstock/scripts/run-relay.sh
+```
+
+Edit that `BASE_URL` line to your actual Render URL first (and
+`APP_PASSWORD` if you've set one on Render — leave it as `""` if not).
+
+Now schedule it — this example runs every 12 hours (43,200,000
+milliseconds), matching the Render cron schedule:
+
+```bash
+termux-job-scheduler --job-id 1 --period-ms 43200000 --script ~/skinstock/scripts/run-relay.sh
+```
+
+That's it — Android will now wake Termux briefly every 12 hours to run
+the relay script, even if you haven't opened the app in days. Check
+`~/relay.log` any time to see what the last few runs did.
+
+A couple of honest caveats, since this is Android running something in
+the background rather than an always-on server: some phones' battery
+optimization can still delay or skip a scheduled run if the phone's been
+idle for a long time, and `--period-ms` is a minimum interval Android is
+allowed to stretch, not a guarantee. If you notice runs aren't happening
+reliably, go to Android Settings → Apps → Termux → Battery, and remove
+any battery restriction on it.
+
+To cancel the schedule later: `termux-job-scheduler --job-id 1 --cancel`.

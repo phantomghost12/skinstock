@@ -264,7 +264,7 @@ function listingRowHtml(l, lowest) {
   // error is already displayed in place of the price above.
   const staleErrorHtml =
     l.current_price !== null && l.last_error
-      ? `<div class="listing-error listing-stale-error">Last check failed: ${escapeHtml(l.last_error)}</div>`
+      ? `<div class="listing-error listing-stale-error">Price might be incorrect</div>`
       : '';
 
   return `

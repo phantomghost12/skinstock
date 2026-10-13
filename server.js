@@ -94,6 +94,30 @@ function productWithListings(data, product) {
   };
 }
 
+// Applies a scrape result (price/stock/error) to a listing and, on
+// success, appends a history point — shared by the server's own scraping
+// (checkOneListing below) and by /api/scrape/report, which accepts results
+// a *local* relay script already scraped using a different IP (see
+// scripts/relay-blocked-hosts.js). Same effect either way; the only
+// difference is who made the actual HTTP request to the retailer's site.
+function applyCheckResult(data, listing, result) {
+  listing.last_checked = new Date().toISOString();
+  if (result.ok) {
+    listing.current_price = result.price;
+    listing.original_price = result.originalPrice;
+    listing.in_stock = result.inStock === null ? true : result.inStock; // unknown -> assume in stock
+    listing.last_error = null;
+    data.history.push({
+      id: db.nextId(data),
+      listing_id: listing.id,
+      price: result.price,
+      checked_at: listing.last_checked,
+    });
+  } else {
+    listing.last_error = result.error || 'Unknown error';
+  }
+}
+
 async function checkOneListing(data, listing) {
   try {
     const result = await scrapeListing(
@@ -102,21 +126,7 @@ async function checkOneListing(data, listing) {
       listing.original_selector,
       listing.stock_selector
     );
-    listing.last_checked = new Date().toISOString();
-    if (result.ok) {
-      listing.current_price = result.price;
-      listing.original_price = result.originalPrice;
-      listing.in_stock = result.inStock === null ? true : result.inStock; // unknown -> assume in stock
-      listing.last_error = null;
-      data.history.push({
-        id: db.nextId(data),
-        listing_id: listing.id,
-        price: result.price,
-        checked_at: listing.last_checked,
-      });
-    } else {
-      listing.last_error = result.error;
-    }
+    applyCheckResult(data, listing, result);
     return { listing_id: listing.id, ...result };
   } catch (err) {
     listing.last_checked = new Date().toISOString();
@@ -200,7 +210,7 @@ app.post('/api/products/:id/scrape', async (req, res) => {
   if (!product) return res.status(404).json({ error: 'Product not found' });
   const listings = data.listings.filter((l) => l.product_id === product.id);
   const results = await scrapeAll(data, listings);
-  db.save(data);
+  saveResultsOntoLatest(results);
   res.json({ checked: results.length, results });
 });
 
@@ -237,8 +247,8 @@ app.post('/api/products/:id/listings', async (req, res) => {
 
   const fresh = db.load();
   const l = fresh.listings.find((x) => x.id === listing.id);
-  await checkOneListing(fresh, l);
-  db.save(fresh);
+  const result = await checkOneListing(fresh, l);
+  saveResultsOntoLatest([result]);
   res.status(201).json(l);
 });
 
@@ -271,8 +281,8 @@ app.put('/api/listings/:id', async (req, res) => {
 
   const fresh = db.load();
   const l = fresh.listings.find((x) => x.id === listing.id);
-  await checkOneListing(fresh, l);
-  db.save(fresh);
+  const result = await checkOneListing(fresh, l);
+  saveResultsOntoLatest([result]);
   res.json(l);
 });
 
@@ -294,13 +304,30 @@ app.post('/api/scrape/test', async (req, res) => {
 // what's happening without either of them having to sit and wait for it.
 let scrapeState = { inProgress: false, lastStartedAt: null, lastFinishedAt: null, lastChecked: null, lastFailed: null };
 
+// Re-applies this run's own results onto whatever is CURRENTLY on disk,
+// rather than saving the big in-memory snapshot this run started with —
+// that snapshot can be minutes stale by the time a long scrape finishes,
+// and saving it wholesale would silently erase anything another writer
+// (e.g. scripts/relay-blocked-hosts.js, reporting from a phone on its own
+// schedule) saved in the meantime. Narrows that race down from the whole
+// scrape's duration to roughly the single load+save below.
+function saveResultsOntoLatest(results) {
+  const fresh = db.load();
+  const freshById = new Map(fresh.listings.map((l) => [l.id, l]));
+  for (const r of results) {
+    const listing = freshById.get(r.listing_id);
+    if (listing) applyCheckResult(fresh, listing, r);
+  }
+  db.save(fresh);
+}
+
 async function runFullScrape() {
   scrapeState.inProgress = true;
   scrapeState.lastStartedAt = new Date().toISOString();
   try {
     const data = db.load();
     const results = await scrapeAll(data, data.listings);
-    db.save(data);
+    saveResultsOntoLatest(results);
     scrapeState.lastChecked = results.length;
     scrapeState.lastFailed = results.filter((r) => !r.ok).length;
   } catch (err) {
@@ -346,6 +373,46 @@ app.get('/api/scrape/failures', (req, res) => {
       still_showing_old_price: l.current_price !== null,
     }));
   res.json({ count: failures.length, failures });
+});
+
+// Lets a trusted script running somewhere else (see
+// scripts/relay-blocked-hosts.js) report results for listings it scraped
+// itself, using whatever network connection it's running on — a home
+// network, a phone's mobile data, anything other than this server's own
+// IP. This server never makes a request to the retailer on that script's
+// behalf and never tries to disguise where a request comes from; it only
+// records a price the script already fetched on its own.
+//
+// Protected by the same APP_PASSWORD check as the rest of the API (see the
+// top of this file). If APP_PASSWORD isn't set, this is open to anyone who
+// finds the URL — set APP_PASSWORD before relying on this endpoint for
+// anything running outside your own machine.
+app.post('/api/scrape/report', (req, res) => {
+  const { results } = req.body;
+  if (!Array.isArray(results) || results.length === 0) {
+    return res.status(400).json({ error: 'Expected a non-empty "results" array.' });
+  }
+  const data = db.load();
+  const listingsById = new Map(data.listings.map((l) => [l.id, l]));
+  const applied = [];
+  const skipped = [];
+  for (const r of results) {
+    const listing = listingsById.get(Number(r.listing_id));
+    if (!listing) {
+      skipped.push({ listing_id: r.listing_id, reason: 'No such listing.' });
+      continue;
+    }
+    applyCheckResult(data, listing, {
+      ok: !!r.ok,
+      price: typeof r.price === 'number' ? r.price : null,
+      originalPrice: typeof r.originalPrice === 'number' ? r.originalPrice : null,
+      inStock: typeof r.inStock === 'boolean' ? r.inStock : null,
+      error: r.error || null,
+    });
+    applied.push(listing.id);
+  }
+  db.save(data);
+  res.json({ ok: true, applied_count: applied.length, applied, skipped });
 });
 
 app.get('/api/listings/:id/history', (req, res) => {
@@ -425,8 +492,8 @@ app.post('/api/restore', (req, res) => {
 if (process.env.SCHEDULE_CRON) {
   cron.schedule(process.env.SCHEDULE_CRON, async () => {
     const data = db.load();
-    await scrapeAll(data, data.listings);
-    db.save(data);
+    const results = await scrapeAll(data, data.listings);
+    saveResultsOntoLatest(results);
     console.log(`[scrape] scheduled check ran at ${new Date().toISOString()}`);
   });
   console.log(`Scheduled refresh enabled: ${process.env.SCHEDULE_CRON}`);
