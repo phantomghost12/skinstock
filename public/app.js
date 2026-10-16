@@ -271,7 +271,7 @@ function listingRowHtml(l, lowest) {
     <div class="listing-row ${isLowest ? 'lowest' : ''} ${isOos ? 'oos' : ''}">
       <div>
         <div class="listing-site">${escapeHtml(l.website_name)}${isLowest ? ' — lowest' : ''}</div>
-        <div class="listing-meta">${l.last_checked ? 'Checked ' + timeAgo(l.last_checked) : ''}</div>
+        <div class="listing-meta">${l.last_checked ? 'Checked ' + timeAgo(l.last_checked) : ''}${l.auto_check === false ? ' &middot; manual only' : ''}</div>
         <a class="listing-link" href="${escapeAttr(l.url)}" target="_blank" rel="noopener">Open site</a>
       </div>
       <div style="text-align:right;">
@@ -377,6 +377,7 @@ function openAddListingModal() {
   el('listingSelector').value = '';
   el('listingOriginalSelector').value = '';
   el('listingStockSelector').value = '';
+  el('listingAutoCheck').checked = true;
   el('testResult').hidden = true;
   el('presetNote').hidden = true;
   el('addListingModal').hidden = false;
@@ -396,6 +397,7 @@ function openEditListingModal(listing) {
   el('listingSelector').value = listing.css_selector || '';
   el('listingOriginalSelector').value = listing.original_selector || '';
   el('listingStockSelector').value = listing.stock_selector || '';
+  el('listingAutoCheck').checked = listing.auto_check !== false;
   el('testResult').hidden = true;
   el('presetNote').hidden = true;
   el('addListingModal').hidden = false;
@@ -472,6 +474,7 @@ async function saveListing() {
   const css_selector = el('listingSelector').value.trim();
   const original_selector = el('listingOriginalSelector').value.trim();
   const stock_selector = el('listingStockSelector').value.trim();
+  const auto_check = el('listingAutoCheck').checked;
   if (!website_name || !url || !css_selector) {
     alert('Please fill in website name, URL, and selector.');
     return;
@@ -482,6 +485,7 @@ async function saveListing() {
     css_selector,
     original_selector: original_selector || undefined,
     stock_selector: stock_selector || undefined,
+    auto_check,
   };
   if (state.editingListingId) {
     await api(`/listings/${state.editingListingId}`, { method: 'PUT', body: JSON.stringify(payload) });

@@ -130,6 +130,12 @@
     <label>CSS selector for stock status <span class="muted">(optional — usually the Add to Cart button)</span></label>
     <input id="listingStockSelector" type="text" placeholder='e.g. button[name="add"], .single_add_to_cart_button' />
 
+    <label class="checkbox-label">
+      <input id="listingAutoCheck" type="checkbox" checked />
+      Include in automatic refresh (cron job + the Refresh button)
+    </label>
+    <p class="muted small">Turn this off for a site you're updating another way (e.g. a script running on your phone) — Render's own scraper will leave it alone instead of overwriting that update. The Test button below still works either way.</p>
+
     <button id="testListingBtn" class="secondary-btn">Test</button>
     <div id="testResult" class="test-result" hidden></div>
 

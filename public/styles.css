@@ -235,6 +235,20 @@ label {
   margin: 14px 0 5px;
 }
 
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--ink);
+  margin: 14px 0 2px;
+}
+.checkbox-label input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
 input[type="text"], textarea {
   width: 100%;
   padding: 11px 12px;

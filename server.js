@@ -208,7 +208,10 @@ app.post('/api/products/:id/scrape', async (req, res) => {
   const data = db.load();
   const product = data.products.find((p) => p.id === Number(req.params.id));
   if (!product) return res.status(404).json({ error: 'Product not found' });
-  const listings = data.listings.filter((l) => l.product_id === product.id);
+  // auto_check === false means "leave this one to the phone relay /
+  // another process" — the Refresh button respects that same flag the
+  // cron job does, so it doesn't fight whatever else is keeping it updated.
+  const listings = data.listings.filter((l) => l.product_id === product.id && l.auto_check !== false);
   const results = await scrapeAll(data, listings);
   saveResultsOntoLatest(results);
   res.json({ checked: results.length, results });
@@ -221,7 +224,7 @@ app.post('/api/products/:id/listings', async (req, res) => {
   const product = data.products.find((p) => p.id === Number(req.params.id));
   if (!product) return res.status(404).json({ error: 'Product not found' });
 
-  const { website_name, url, css_selector, original_selector, stock_selector } = req.body;
+  const { website_name, url, css_selector, original_selector, stock_selector, auto_check } = req.body;
   if (!website_name || !url || !css_selector) {
     return res.status(400).json({
       error: 'website_name, url, and css_selector are all required.',
@@ -241,6 +244,11 @@ app.post('/api/products/:id/listings', async (req, res) => {
     in_stock: true, // assume true until we check
     last_checked: null,
     last_error: null,
+    // false means "leave this one alone" for the cron job and the Refresh
+    // button — for a site being kept up to date some other way instead
+    // (e.g. scripts/relay-blocked-hosts.js from a phone). The Test button
+    // and that relay script both still work regardless of this flag.
+    auto_check: auto_check !== false,
   };
   data.listings.push(listing);
   db.save(data);
@@ -268,7 +276,7 @@ app.put('/api/listings/:id', async (req, res) => {
   const listing = data.listings.find((l) => l.id === Number(req.params.id));
   if (!listing) return res.status(404).json({ error: 'Listing not found' });
 
-  const { website_name, url, css_selector, original_selector, stock_selector } = req.body;
+  const { website_name, url, css_selector, original_selector, stock_selector, auto_check } = req.body;
   if (!website_name || !url || !css_selector) {
     return res.status(400).json({ error: 'website_name, url, and css_selector are all required.' });
   }
@@ -277,6 +285,7 @@ app.put('/api/listings/:id', async (req, res) => {
   listing.css_selector = css_selector;
   listing.original_selector = original_selector || null;
   listing.stock_selector = stock_selector || null;
+  if (auto_check !== undefined) listing.auto_check = auto_check !== false;
   db.save(data);
 
   const fresh = db.load();
@@ -326,7 +335,8 @@ async function runFullScrape() {
   scrapeState.lastStartedAt = new Date().toISOString();
   try {
     const data = db.load();
-    const results = await scrapeAll(data, data.listings);
+    const autoListings = data.listings.filter((l) => l.auto_check !== false);
+    const results = await scrapeAll(data, autoListings);
     saveResultsOntoLatest(results);
     scrapeState.lastChecked = results.length;
     scrapeState.lastFailed = results.filter((r) => !r.ok).length;
@@ -492,7 +502,8 @@ app.post('/api/restore', (req, res) => {
 if (process.env.SCHEDULE_CRON) {
   cron.schedule(process.env.SCHEDULE_CRON, async () => {
     const data = db.load();
-    const results = await scrapeAll(data, data.listings);
+    const autoListings = data.listings.filter((l) => l.auto_check !== false);
+    const results = await scrapeAll(data, autoListings);
     saveResultsOntoLatest(results);
     console.log(`[scrape] scheduled check ran at ${new Date().toISOString()}`);
   });
